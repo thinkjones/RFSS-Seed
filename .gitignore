@@ -1,0 +1,6 @@
+*.iml
+venv
+node_modules
+.idea
+server.log
+*.pyc
