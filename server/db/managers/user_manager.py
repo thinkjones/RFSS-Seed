@@ -15,3 +15,11 @@ class UserManager(object):
         db_session.add(new_item)
         db_session.commit()
         return new_item
+
+    @staticmethod
+    def all_real_users():
+        return User.query.filter_by(type=UserType.HUMAN).all()
+
+    @staticmethod
+    def all():
+        return User.query.all()
