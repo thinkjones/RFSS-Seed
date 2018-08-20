@@ -13,7 +13,7 @@ pip install virtualenv
 ## Setup dev env
 ```
 virtualenv venv --distribute
-source venv/bin/activate
+source .alias
 pip install -r requirements.txt
 ``` 
 
