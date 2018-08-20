@@ -8,12 +8,23 @@ export default class AircraftList extends React.Component {
     }
 
     componentDidMount() {
+        this.refreshList()
+    }
+
+    componentDidUpdate = (prevProps, prevState, snapshot) => {
+        if (prevProps.update_id !== this.props.update_id) {
+            this.refreshList()
+        }
+    }
+
+    refreshList = () => {
         axios.get(`api/aircraft`)
             .then(res => {
                 const aircraft = res.data;
                 this.setState({ aircraft });
             })
     }
+
 
     render() {
         return (

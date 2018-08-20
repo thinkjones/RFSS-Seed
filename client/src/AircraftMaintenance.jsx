@@ -34,6 +34,7 @@ export default class AircraftMaintenance extends React.Component {
         axios.put(`api/maintenance/completed/${maintenance_id}`, {})
             .then(res => {
                 this.refreshHistory()
+                this.props.onMaintenanceChange()
             })
     }
 

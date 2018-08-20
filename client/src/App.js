@@ -24,12 +24,12 @@ class App extends Component {
       <div className="App">
           <div>
               <h1>Aircraft Health</h1>
-              <AircraftList onSelect={this.handleAircraftSelected} />
+              <AircraftList onSelect={this.handleAircraftSelected} update_id={this.state.update_id}  />
           </div>
           <hr/>
           <div>
               <h2>Maintenance History</h2>
-              {this.state.aircraft_id ? <AircraftMaintenance update_id={this.state.update_id} aircraft_id={this.state.aircraft_id}/> : <span>Select an Aircraft to view history.</span>}
+              {this.state.aircraft_id ? <AircraftMaintenance update_id={this.state.update_id} aircraft_id={this.state.aircraft_id} onMaintenanceChange={handleMaintenanceUpdate} /> : <span>Select an Aircraft to view history.</span>}
               <hr/>
               {this.state.aircraft_id ?
               <div>
