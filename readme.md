@@ -1,20 +1,13 @@
-# AFSP-Seed Project:
-**Angular -> Flask -> SQLAlchemy -> Postgres**
+# React-Flask-SQLAlchemy-SqlLite Project 
 
-# Pre-requisites 
+# Installation
+
 ## Env
 ```
 brew install python
 pip install --upgrade pip setuptools
 sudo pip install virtualenv
 pip install virtualenv
-```
-
-## Pre-requisite Postgres
-```
-brew install postgresql
-pg_ctl -D /usr/local/var/postgres start
-psql then createdb afsp_seed_dev
 ```
 
 ## Setup dev env
@@ -24,30 +17,49 @@ source venv/bin/activate
 pip install -r requirements.txt
 ``` 
 
-# Run
+# Client
+```
+cd client
+npm install
+```
+
+# Running the App.
+## Server
 ```
 source .alias
-pg_ctl -D /usr/local/var/postgres start
-python -m server/server app run
+python server/app.py
 ```
 
-# LICENSE
-The MIT License
+It should start with the following message:
+```
+^C(venv) admins-MacBook-Pro:RFSS-Seed thinkjones$ python server/app.py
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The React client proxies server calls to the server and the default should be `5000` if it isn't you will need to update the proxy
+field in client/package.json.  `"proxy": "http://localhost:5000/"`
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+## Run the client
+```
+cd client;
+npm start;
+```
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+# Ops (Automated Tool Tasks)
+
+## Reset DB
+source .alias
+python ops/reset_db.py
+
+## Maintenance History and Health of a zip
+source .alias
+python ops/query_maintenance.py <aircraft_id>
+
+## Mark Maintenance Item of a zip completed
+source .alias
+python ops/maintenance_completed.py <maintenance_id>

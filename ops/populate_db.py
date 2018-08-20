@@ -13,13 +13,16 @@ def populate_db():
     u1 = UserManager.add('Operator User', 'operator@zips.com', UserType.HUMAN)
     u2 = UserManager.add('Automated User', 'automator@zips.com', UserType.AUTOMATED)
 
-    a1 = AircraftManager.add('Zip 21', AircraftHealth.GOOD)
-    a2 = AircraftManager.add('Zip 44', AircraftHealth.GOOD)
-    a3 = AircraftManager.add('Zip 66', AircraftHealth.GOOD)
+    aircraft_names = ['Zip 21', 'Zip 44', 'Zip 66']
+    aircraft = []
+    for a in aircraft_names:
+        item = AircraftManager.add(a, AircraftHealth.GOOD)
+        print '{a} id is {id}'.format(a=a, id=item.id)
+        aircraft.append(item)
 
-    MaintenanceManager.add(u2.id, a1.id, 'Tail assembly loose', blocked=False)
-    MaintenanceManager.add(u2.id, a2.id, 'Left tail outboard servo needs to be checked', blocked=True)
-    MaintenanceManager.add(u2.id, a2.id, 'Broken left wing tip on recovery', blocked=True)
+    MaintenanceManager.add(u2.id, aircraft[0].id, 'Tail assembly loose', blocked=False)
+    MaintenanceManager.add(u2.id, aircraft[1].id, 'Left tail outboard servo needs to be checked', blocked=True)
+    MaintenanceManager.add(u2.id, aircraft[1].id, 'Broken left wing tip on recovery', blocked=True)
 
     print 'Database Populated'
 
