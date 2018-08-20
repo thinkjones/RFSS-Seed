@@ -24,13 +24,20 @@ def get_all_zips():
     return jsonify([a.to_json() for a in aircraft])
 
 
-@app.route('/api/maintenance/<aircraft_id>', methods=['GET'])
+@app.route('/api/maintenance/aircraft/<aircraft_id>', methods=['GET'])
 def get_maintenance_history(aircraft_id):
     history, to_dict = MaintenanceManager.history(aircraft_id)
     return jsonify([to_dict(h) for h in history])
 
 
-@app.route('/api/maintenance/<aircraft_id>', methods=['POST'])
+@app.route('/api/maintenance/completed/<maintenance_id>', methods=['PUT'])
+def mark_maintenance_completed(maintenance_id):
+    aircraft_id, health = MaintenanceManager.completed(maintenance_id)
+    AircraftManager.set_health(aircraft_id, health)
+    return jsonify({'success': True})
+
+
+@app.route('/api/maintenance/aircraft/<aircraft_id>', methods=['POST'])
 def add_maintenance_history(aircraft_id):
     user = get_current_real_user()
     data = request.json

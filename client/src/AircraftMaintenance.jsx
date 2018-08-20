@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Button, ControlLabel, FormControl, FormGroup, HelpBlock, Radio} from 'react-bootstrap'
 
 export default class AircraftMaintenance extends React.Component {
 
@@ -22,10 +23,17 @@ export default class AircraftMaintenance extends React.Component {
     }
 
     refreshHistory = () => {
-        axios.get(`api/maintenance/${this.props.aircraft_id}`)
+        axios.get(`api/maintenance/aircraft/${this.props.aircraft_id}`)
             .then(res => {
                 const maintenance = res.data;
                 this.setState({ maintenance });
+            })
+    }
+
+    markAsCompleted = (maintenance_id) => {
+        axios.put(`api/maintenance/completed/${maintenance_id}`, {})
+            .then(res => {
+                this.refreshHistory()
             })
     }
 
@@ -53,7 +61,10 @@ export default class AircraftMaintenance extends React.Component {
                         <td>{item.created}</td>
                         <td>{item.created_by}</td>
                         <td>{item.blocked ? 'Yes' : 'No'}</td>
-                        <td>{item.completed ? 'Yes' : 'No'}</td>
+                        <td>
+                            {item.completed ? 'Yes' : 'No'}
+                            {!item.completed ?  <Button type="submit" onClick={() => this.markAsCompleted(item.maintenance_id)}>Mark as Completed</Button> : null }
+                        </td>
                     </tr>)
                 }
                 </tbody>

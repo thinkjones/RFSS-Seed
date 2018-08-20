@@ -27,7 +27,7 @@ export default class AddMaintenance extends React.Component {
     }
 
     handleSubmit = (event) => {
-        axios.post(`api/maintenance/${this.props.aircraft_id}`, {
+        axios.post(`api/maintenance/aircraft/${this.props.aircraft_id}`, {
             description: this.state.description,
             blocked: this.state.blocked === 'true'
         })
